@@ -44,16 +44,14 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.Serializer):
 	username = serializers.CharField()
 	password = serializers.CharField(write_only=True)
-
 	token = serializers.CharField(allow_blank=True, read_only=True)
 
 	def validate(self, data):
 		my_username = data.get('username')
 		my_password = data.get('password')
-
 		try:
 			user_obj = User.objects.get(username=my_username)
-
+			print(user_obj)
 			jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 			jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
@@ -61,7 +59,6 @@ class UserLoginSerializer(serializers.Serializer):
 			token = jwt_encode_handler(payload)
 
 			data["token"] = token
-
 		except:
 			raise serializers.ValidationError("This username does not exist")
 
