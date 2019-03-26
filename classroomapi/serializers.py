@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Classroom
+from rest_framework_jwt.settings import api_settings
 
 class ClassroomListSerializer(serializers.ModelSerializer):
     class Meta:
