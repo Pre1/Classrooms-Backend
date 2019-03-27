@@ -8,3 +8,4 @@ class IsTeacher(BasePermission):
             return True
         else:
             return False
+            

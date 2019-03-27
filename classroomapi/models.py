@@ -7,12 +7,15 @@ class Classroom(models.Model):
 	year = models.CharField(max_length=40)
 	teacher = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
 
+	def __str__(self):
+		return self.subject
 
 class Student(models.Model):
-	name = models.CharField(max_length=120)
+	first_name = models.CharField(max_length=120)
+	last_name = models.CharField(max_length=120)
 	dob = models.DateField()
 	exam_grade = models.DecimalField(max_digits=5, decimal_places=2)
-	classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+	classroom = models.ForeignKey(Classroom, related_name='students', on_delete=models.CASCADE)
 	GENDERS = (
 	('M', 'Male'),
     ('F', 'Female'),
@@ -24,10 +27,7 @@ class Student(models.Model):
 	)
 
 	def __str__(self):
-		return self.name
-
-	def get_absolute_url(self):
-		return reverse('student-detail', kwargs={'student_id':self.id})
+		return self.first_name
 
 	class Meta:
-		ordering = ('name', 'exam_grade',)
+		ordering = ('first_name', 'exam_grade',)

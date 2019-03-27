@@ -1,22 +1,35 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Classroom
+from .models import Classroom, Student
 from rest_framework_jwt.settings import api_settings
 
-class ClassroomListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Classroom
-        fields = ['subject', 'grade']
+class StudentDetailSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Student
+		fields=[
+			'id',
+			'first_name',
+			'last_name',
+			'dob',
+			'exam_grade',
+			'gender'
+		]
 
 class ClassroomDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Classroom
-        fields = ['subject', 'grade', 'year', 'teacher']
+	students = StudentDetailSerializer(many=True)
+	class Meta:
+		model = Classroom
+		fields = ['subject', 'grade', 'year', 'teacher', 'students']
 
-class ClassroomCreateUpdateSerializer(serializers.ModelSerializer):
+class ClassroomListCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classroom
         fields = ['subject', 'grade', 'year']
+
+class StudentCreateUpdateSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Student
+		fields = ['first_name', 'last_name', 'dob', 'exam_grade', 'classroom', 'gender']
 
 class UserRegisterSerializer(serializers.ModelSerializer):
 	password = serializers.CharField(write_only=True)
