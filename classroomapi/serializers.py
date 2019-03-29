@@ -19,12 +19,12 @@ class ClassroomDetailSerializer(serializers.ModelSerializer):
 	students = StudentDetailSerializer(many=True)
 	class Meta:
 		model = Classroom
-		fields = ['subject', 'grade', 'year', 'teacher', 'students']
+		fields = ['id', 'subject', 'grade', 'year', 'teacher', 'students']
 
 class ClassroomListCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classroom
-        fields = ['subject', 'grade', 'year']
+        fields = ['id', 'subject', 'grade', 'year']
 
 class StudentCreateUpdateSerializer(serializers.ModelSerializer):
 	class Meta:
