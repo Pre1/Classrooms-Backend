@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 from .models import Classroom, Student
 from rest_framework_jwt.settings import api_settings
 
+class TecherSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = User
+		fields = ['id', 'username']
+
 class StudentDetailSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Student
@@ -17,6 +22,7 @@ class StudentDetailSerializer(serializers.ModelSerializer):
 
 class ClassroomDetailSerializer(serializers.ModelSerializer):
 	students = StudentDetailSerializer(many=True)
+	teacher = TecherSerializer()
 	class Meta:
 		model = Classroom
 		fields = ['id', 'subject', 'grade', 'year', 'teacher', 'students']
